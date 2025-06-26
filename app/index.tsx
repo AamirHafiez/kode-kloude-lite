@@ -1,33 +1,69 @@
-import { networkApiAdapter } from "@/data/adapters";
-import CoursesRepository from "@/data/respositories/coursesRepository";
-import AppLocalStorage from "@/store/local-storage/appLocalStorage";
-import { useEffect } from "react";
-import { Button, Text, View } from "react-native";
-
-const courses = CoursesRepository(networkApiAdapter);
+import { useInfiniteCoursesQuery } from "@/features/courses/useCoursesQuery";
+import { useRef } from "react";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 export default function Index() {
-  useEffect(() => {
-    (async () => {
-      const res = await courses.getCourses(1);
-      console.log("res", res.data.courses);
-    })();
-  }, []);
+  const {
+    isLoading,
+    error,
+    data,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteCoursesQuery(1);
 
-  const handlePressClickMe = () => {
-    console.log(AppLocalStorage.get("HEALTH"));
+  const onEndReachedCourseListRef = useRef(false);
+
+  const renderSpinner = () => {
+    return <ActivityIndicator />;
   };
 
+  const onEndReached = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+  if (error || data?.pages == null || data.pageParams == null) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  const coursesData = data.pages
+    .flat()
+    .map((item) => item.courses.flat())
+    .flat();
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+    <FlatList
+      data={coursesData}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => {
+        return (
+          <View style={{ margin: 40, backgroundColor: "red" }}>
+            <Text>{item.title}</Text>
+          </View>
+        );
       }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-      <Button title="Click Me" onPress={handlePressClickMe} />
-    </View>
+      onEndReached={() => (onEndReachedCourseListRef.current = true)}
+      onMomentumScrollEnd={() => {
+        onEndReachedCourseListRef.current && onEndReached();
+        onEndReachedCourseListRef.current = false;
+      }}
+      onEndReachedThreshold={0.3}
+      ListFooterComponent={
+        isFetchingNextPage && hasNextPage ? renderSpinner() : null
+      }
+    />
   );
 }

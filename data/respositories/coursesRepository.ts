@@ -3,7 +3,10 @@ import CoursesModel from "../models/CoursesModel";
 
 const CoursesRepository = (apiAdapter: ApiAdapterInstance) => ({
   getCourses: async (page: number) => {
-    return await apiAdapter.get<CoursesModel>(`/courses?page=${page}`);
+    const coursesRes = await apiAdapter.get<CoursesModel>(
+      `/courses?page=${page}`,
+    );
+    return coursesRes.data;
   },
 });
 
