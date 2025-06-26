@@ -19,9 +19,9 @@ export type Course = {
   thumbnail_video_url: string | null;
   tutors: Tutor[];
   popularity: number;
-  difficulty_level: 'beginner' | 'associate'
+  difficulty_level: "beginner" | "associate";
   categories: Category[];
-  plan: 'Free' | 'Standard'
+  plan: "Free" | "Standard";
 };
 
 export type Metadata = {
@@ -36,4 +36,4 @@ type CoursesModel = {
   metadata: Metadata;
 };
 
-export default CoursesModel
+export default CoursesModel;

@@ -1,6 +1,13 @@
+import CourseCard from "@/components/organisms/CourseCard/CourseCard";
 import { useInfiniteCoursesQuery } from "@/features/courses/useCoursesQuery";
 import { useRef } from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function Index() {
   const {
@@ -15,7 +22,7 @@ export default function Index() {
   const onEndReachedCourseListRef = useRef(false);
 
   const renderSpinner = () => {
-    return <ActivityIndicator />;
+    return <ActivityIndicator style={styles.spinner} />;
   };
 
   const onEndReached = () => {
@@ -49,11 +56,7 @@ export default function Index() {
       data={coursesData}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
-        return (
-          <View style={{ margin: 40, backgroundColor: "red" }}>
-            <Text>{item.title}</Text>
-          </View>
-        );
+        return <CourseCard details={item} style={{ margin: 20 }} />;
       }}
       onEndReached={() => (onEndReachedCourseListRef.current = true)}
       onMomentumScrollEnd={() => {
@@ -67,3 +70,9 @@ export default function Index() {
     />
   );
 }
+
+const styles = StyleSheet.create({
+  spinner: {
+    paddingBottom: 20,
+  },
+});
