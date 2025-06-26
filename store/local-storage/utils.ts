@@ -12,17 +12,22 @@ function get<StorageSchema extends object>(storage: MMKV) {
 }
 
 function set<StorageSchema extends object>(storage: MMKV) {
-  return function <K extends keyof StorageSchema>(key: K, value: StorageSchema[K]) {
-      const stringifiedValue = JSON.stringify(value);
-      storage.set(key as string, stringifiedValue);
+  return function <K extends keyof StorageSchema>(
+    key: K,
+    value: StorageSchema[K],
+  ) {
+    const stringifiedValue = JSON.stringify(value);
+    storage.set(key as string, stringifiedValue);
   };
 }
 
-export function createLocalStorage<StorageSchema extends object> ({
-  storage
-}: { storage: MMKV  }) {
+export function createLocalStorage<StorageSchema extends object>({
+  storage,
+}: {
+  storage: MMKV;
+}) {
   return Object.freeze({
     get: get<StorageSchema>(storage),
     set: set<StorageSchema>(storage),
-  })
+  });
 }
