@@ -1,16 +1,16 @@
+import { networkApiAdapter } from "@/data/adapters";
+import CoursesRepository from "@/data/respositories/coursesRepository";
 import AppLocalStorage from "@/store/local-storage/appLocalStorage";
-import axios from "axios";
 import { useEffect } from "react";
 import { Button, Text, View } from "react-native";
+
+const courses = CoursesRepository(networkApiAdapter);
 
 export default function Index() {
   useEffect(() => {
     (async () => {
-      const res = await axios.get<{ success: boolean }>(
-        "http://10.23.83.108:8092/health"
-      );
-      console.log("res", res.data);
-      AppLocalStorage.set("HEALTH", res.data);
+      const res = await courses.getCourses(1);
+      console.log("res", res.data.courses);
     })();
   }, []);
 

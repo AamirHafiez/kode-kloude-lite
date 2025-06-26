@@ -46,8 +46,8 @@
       "uuid": "1af7174e-94bc-44a9-8458-020982e55039"
     }
   ],
-  "proxyMode": false,
-  "proxyHost": "",
+  "proxyMode": true,
+  "proxyHost": "https://learn-api.kodekloud.com/api",
   "proxyRemovePrefix": false,
   "tlsOptions": {
     "enabled": false,
