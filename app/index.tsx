@@ -1,6 +1,6 @@
 import CourseCard from "@/components/organisms/CourseCard/CourseCard";
 import { useInfiniteCoursesQuery } from "@/features/courses/useCoursesQuery";
-import { useRef } from "react";
+import { memo, useMemo, useRef } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -8,6 +8,8 @@ import {
   Text,
   View,
 } from "react-native";
+
+const MemoizedCourseCard = memo(CourseCard);
 
 export default function Index() {
   const {
@@ -31,6 +33,15 @@ export default function Index() {
     }
   };
 
+  const coursesData = useMemo(() => {
+    return data?.pages == null
+      ? []
+      : data.pages
+          .flat()
+          .map((item) => item.courses.flat())
+          .flat();
+  }, [data?.pages]);
+
   if (isLoading) {
     return (
       <View>
@@ -46,17 +57,18 @@ export default function Index() {
     );
   }
 
-  const coursesData = data.pages
-    .flat()
-    .map((item) => item.courses.flat())
-    .flat();
-
   return (
     <FlatList
       data={coursesData}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
-        return <CourseCard details={item} style={{ margin: 20 }} />;
+        return (
+          <MemoizedCourseCard
+            details={item}
+            style={{ margin: 20 }}
+            onPress={(data) => console.log("data", data)}
+          />
+        );
       }}
       onEndReached={() => (onEndReachedCourseListRef.current = true)}
       onMomentumScrollEnd={() => {
