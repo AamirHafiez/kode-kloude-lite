@@ -3,10 +3,8 @@ import TButton from "@/components/atoms/TButton/TButton";
 import TText from "@/components/atoms/TText/TText";
 import CourseCard from "@/components/organisms/CourseCard/CourseCard";
 import OnlineStatusBar from "@/components/organisms/OnlineStatusBar/OnlineStatusBar";
-import useCourses from "@/features/courses/useCourses";
-import useOnlineStatus from "@/utils/hooks/useOnlineStatus";
-import { useRouter } from "expo-router";
-import { memo, useMemo, useRef } from "react";
+import useHomeController from "@/controllers/useHomeController";
+import { memo } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -19,39 +17,19 @@ const MemoizedCourseCard = memo(CourseCard);
 
 const Home = () => {
   const {
+    coursesData,
+    onlineStatus,
+    shouldRenderSpinner,
     isLoading,
     error,
-    data,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useCourses(1);
-
-  const onlineStatus = useOnlineStatus();
-
-  const router = useRouter();
-
-  const onEndReachedCourseListRef = useRef(false);
+    onListMomentumScrollEnd,
+    onListEndReached,
+    handlePressNavigateDownloads,
+  } = useHomeController();
 
   const renderSpinner = () => {
     return <ActivityIndicator style={styles.spinner} />;
   };
-
-  const onEndReached = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const coursesData = useMemo(() => {
-    return data?.pages == null
-      ? []
-      : data.pages
-          .flat()
-          .map((item) => item?.courses.flat())
-          .filter((item) => item != null)
-          .flat();
-  }, [data?.pages]);
 
   if (isLoading && onlineStatus.isConnected) {
     return (
@@ -90,21 +68,16 @@ const Home = () => {
             />
           );
         }}
-        onEndReached={() => (onEndReachedCourseListRef.current = true)}
-        onMomentumScrollEnd={() => {
-          onEndReachedCourseListRef.current && onEndReached();
-          onEndReachedCourseListRef.current = false;
-        }}
+        onEndReached={onListEndReached}
+        onMomentumScrollEnd={onListMomentumScrollEnd}
         onEndReachedThreshold={0.3}
-        ListFooterComponent={
-          isFetchingNextPage && hasNextPage ? renderSpinner() : null
-        }
+        ListFooterComponent={shouldRenderSpinner ? renderSpinner() : null}
       />
       {onlineStatus?.isConnected != null && !onlineStatus.isConnected && (
         <TBox style={styles.downloadsContainer}>
           <TButton
             title="Go to downloads"
-            onPress={() => router.replace("/downloads")}
+            onPress={handlePressNavigateDownloads}
           />
         </TBox>
       )}

@@ -37,7 +37,7 @@ const Downloads = () => {
           );
         }}
       />
-      {onlineStatus?.isConnected != null && !onlineStatus.isConnected && (
+      {onlineStatus?.isConnected != null && onlineStatus.isConnected && (
         <TBox style={styles.downloadsContainer}>
           <TButton title="Go Online" onPress={() => router.replace("/home")} />
         </TBox>
