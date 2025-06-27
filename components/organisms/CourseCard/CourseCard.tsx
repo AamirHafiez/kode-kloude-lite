@@ -11,10 +11,11 @@ type CourseCardProps = {
   style?: StyleProp<ViewStyle>;
   details: Pick<Course, "title" | "tutors" | "thumbnail_url">;
   onPress?: (data: CourseCardProps["details"]) => void;
+  isLastViewed?: boolean;
 };
 
 const CourseCard = (props: CourseCardProps) => {
-  const { style, details, onPress } = props;
+  const { style, details, onPress, isLastViewed = false } = props;
 
   const handlePress = () => {
     if (onPress) {
@@ -25,6 +26,11 @@ const CourseCard = (props: CourseCardProps) => {
   return (
     <TPressable disabled={onPress == null} onPress={handlePress}>
       <TSurface style={[styles.container, style]}>
+        {isLastViewed && (
+          <TText style={styles.lastViewedHeading} variant="body1">
+            Last Viewed
+          </TText>
+        )}
         <ThumbnailImage source={details.thumbnail_url} />
         <TBox style={styles.textContainer}>
           <TText style={styles.heading} variant="body1">
@@ -52,5 +58,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginBottom: 10,
+  },
+  lastViewedHeading: {
+    marginBottom: 10,
+    color: "forestgreen",
+    textAlign: "center",
   },
 });

@@ -1,12 +1,9 @@
-import { networkApiAdapter } from "@/data/adapters";
 import CoursesModel from "@/data/models/CoursesModel";
-import CoursesRepository from "@/data/respositories/coursesRepository";
 import AppLocalStorage from "@/store/local-storage/appLocalStorage";
 import useOnlineStatus from "@/utils/hooks/useOnlineStatus";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import coursesNetworkAdapter from "./coursesNetworkAdapter";
 import coursesQueryKeys from "./coursesQueryKeys";
-
-const courses = CoursesRepository(networkApiAdapter);
 
 const cacheCourseResponse = (data: CoursesModel | undefined) => {
   const courses = data?.courses;
@@ -26,7 +23,7 @@ const cacheCourseResponse = (data: CoursesModel | undefined) => {
 };
 
 const getCoursesData = async (page: number) => {
-  const res = await courses.getCourses(page);
+  const res = await coursesNetworkAdapter.getCourses(page);
   cacheCourseResponse(res);
   return res;
 };
@@ -36,7 +33,7 @@ const useInfiniteCoursesQuery = (initialPage: number) => {
 
   const coursesQuery = useInfiniteQuery({
     queryKey: coursesQueryKeys.page(networkState.isConnected!),
-    queryFn: async ({ pageParam }) => getCoursesData(pageParam),
+    queryFn: ({ pageParam }) => getCoursesData(pageParam),
     initialPageParam: initialPage,
     getNextPageParam: (lastPage) => lastPage?.metadata?.next_page,
     enabled: networkState.isConnected != null,

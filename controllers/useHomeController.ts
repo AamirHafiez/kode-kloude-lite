@@ -1,7 +1,9 @@
+import { Course } from "@/data/models/CoursesModel";
 import useCourses from "@/features/courses/useCourses";
+import { useAppLocalStorage } from "@/store/local-storage/appLocalStorage";
 import useOnlineStatus from "@/utils/hooks/useOnlineStatus";
 import { useRouter } from "expo-router";
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 const useHomeController = () => {
   const {
@@ -12,6 +14,8 @@ const useHomeController = () => {
     fetchNextPage,
     hasNextPage,
   } = useCourses(1);
+
+  const [lastViewedCourse] = useAppLocalStorage("LAST_VIEW_COURSE");
 
   const onlineStatus = useOnlineStatus();
 
@@ -48,6 +52,10 @@ const useHomeController = () => {
     router.replace("/downloads");
   };
 
+  const handlePressCourseCard = useCallback((course: Course) => {
+    router.navigate(`/course-detail/${course.slug}`);
+  }, []);
+
   return {
     coursesData,
     onlineStatus,
@@ -57,6 +65,8 @@ const useHomeController = () => {
     onListMomentumScrollEnd,
     onListEndReached,
     handlePressNavigateDownloads,
+    handlePressCourseCard,
+    lastViewedCourse,
   };
 };
 

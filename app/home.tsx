@@ -5,13 +5,7 @@ import CourseCard from "@/components/organisms/CourseCard/CourseCard";
 import OnlineStatusBar from "@/components/organisms/OnlineStatusBar/OnlineStatusBar";
 import useHomeController from "@/controllers/useHomeController";
 import { memo } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 
 const MemoizedCourseCard = memo(CourseCard);
 
@@ -25,24 +19,40 @@ const Home = () => {
     onListMomentumScrollEnd,
     onListEndReached,
     handlePressNavigateDownloads,
+    handlePressCourseCard,
+    lastViewedCourse,
   } = useHomeController();
 
   const renderSpinner = () => {
     return <ActivityIndicator style={styles.spinner} />;
   };
 
+  const renderLastViewCourse = () => {
+    if (lastViewedCourse == null) return null;
+
+    return (
+      <TBox style={styles.lastViewedContainer}>
+        <CourseCard
+          details={lastViewedCourse}
+          onPress={() => handlePressCourseCard(lastViewedCourse)}
+          isLastViewed
+        />
+      </TBox>
+    );
+  };
+
   if (isLoading && onlineStatus.isConnected) {
     return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+      <TBox>
+        <TText>Loading...</TText>
+      </TBox>
     );
   }
   if (error && onlineStatus.isConnected) {
     return (
-      <View>
-        <Text>Error</Text>
-      </View>
+      <TBox>
+        <TText>Error</TText>
+      </TBox>
     );
   }
 
@@ -64,7 +74,7 @@ const Home = () => {
             <MemoizedCourseCard
               details={item}
               style={{ margin: 20 }}
-              onPress={(data) => console.log("data", data)}
+              onPress={() => handlePressCourseCard(item)}
             />
           );
         }}
@@ -72,6 +82,7 @@ const Home = () => {
         onMomentumScrollEnd={onListMomentumScrollEnd}
         onEndReachedThreshold={0.3}
         ListFooterComponent={shouldRenderSpinner ? renderSpinner() : null}
+        ListHeaderComponent={renderLastViewCourse()}
       />
       {onlineStatus?.isConnected != null && !onlineStatus.isConnected && (
         <TBox style={styles.downloadsContainer}>
@@ -97,5 +108,9 @@ const styles = StyleSheet.create({
   },
   downloadsContainer: {
     paddingBottom: 30,
+  },
+  lastViewedContainer: {
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
 });
