@@ -1,3 +1,3 @@
 export default Object.freeze({
-  NETWORK_BASE_URL: "http://10.23.83.108:8092",
+  NETWORK_BASE_URL: "http://192.168.1.8:8092",
 });

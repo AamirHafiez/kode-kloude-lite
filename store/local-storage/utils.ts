@@ -21,6 +21,12 @@ function set<StorageSchema extends object>(storage: MMKV) {
   };
 }
 
+function clear<StorageSchema extends object>(storage: MMKV) {
+  return function <K extends keyof StorageSchema>(key: K) {
+    storage.delete(key as string);
+  };
+}
+
 export function createLocalStorage<StorageSchema extends object>({
   storage,
 }: {
@@ -29,5 +35,6 @@ export function createLocalStorage<StorageSchema extends object>({
   return Object.freeze({
     get: get<StorageSchema>(storage),
     set: set<StorageSchema>(storage),
+    delete: clear<StorageSchema>(storage),
   });
 }

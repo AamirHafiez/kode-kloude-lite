@@ -1,90 +1,30 @@
-import CourseCard from "@/components/organisms/CourseCard/CourseCard";
-import { useInfiniteCoursesQuery } from "@/features/courses/useCoursesQuery";
-import { memo, useMemo, useRef } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-
-const MemoizedCourseCard = memo(CourseCard);
+import TBox from "@/components/atoms/TBox/TBox";
+import TButton from "@/components/atoms/TButton/TButton";
+import AppLocalStorage from "@/store/local-storage/appLocalStorage";
+import { useRouter } from "expo-router";
 
 export default function Index() {
-  const {
-    isLoading,
-    error,
-    data,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteCoursesQuery(1);
+  const router = useRouter();
 
-  const onEndReachedCourseListRef = useRef(false);
-
-  const renderSpinner = () => {
-    return <ActivityIndicator style={styles.spinner} />;
+  // TODO: Remove this
+  const logCache = () => {
+    const cachedData = AppLocalStorage.get("COURSES")?.courses;
+    cachedData?.forEach((element) => {
+      console.log("index cachedData", element.title);
+    });
+    console.log();
   };
-
-  const onEndReached = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const coursesData = useMemo(() => {
-    return data?.pages == null
-      ? []
-      : data.pages
-          .flat()
-          .map((item) => item.courses.flat())
-          .flat();
-  }, [data?.pages]);
-
-  if (isLoading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-  if (error || data?.pages == null || data.pageParams == null) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
 
   return (
-    <FlatList
-      data={coursesData}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => {
-        return (
-          <MemoizedCourseCard
-            details={item}
-            style={{ margin: 20 }}
-            onPress={(data) => console.log("data", data)}
-          />
-        );
-      }}
-      onEndReached={() => (onEndReachedCourseListRef.current = true)}
-      onMomentumScrollEnd={() => {
-        onEndReachedCourseListRef.current && onEndReached();
-        onEndReachedCourseListRef.current = false;
-      }}
-      onEndReachedThreshold={0.3}
-      ListFooterComponent={
-        isFetchingNextPage && hasNextPage ? renderSpinner() : null
-      }
-    />
+    <TBox>
+      <TButton onPress={() => router.navigate("/home")} title="Go to Home" />
+      {/* // TODO: Remove this */}
+      <TButton
+        onPress={() => AppLocalStorage.delete("COURSES")}
+        title="Delete Storage"
+      />
+      {/* // TODO: Remove this */}
+      <TButton onPress={logCache} title="Log Storage" />
+    </TBox>
   );
 }
-
-const styles = StyleSheet.create({
-  spinner: {
-    paddingBottom: 20,
-  },
-});

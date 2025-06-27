@@ -1,6 +1,7 @@
 const coursesQueryKeys = Object.freeze({
   all: [{ scope: "courses" }] as const,
-  page: () => [{ ...coursesQueryKeys.all[0] }] as const,
+  page: (onlineState: boolean) =>
+    [{ ...coursesQueryKeys.all[0], onlineState }] as const,
 });
 
 export default coursesQueryKeys;

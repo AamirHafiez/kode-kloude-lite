@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  onlineManager,
+} from "@tanstack/react-query";
+import * as Network from "expo-network";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,6 +18,15 @@ export const queryClient = new QueryClient({
 });
 
 const QueryProvider = ({ children }: { children: React.ReactNode }) => {
+  useEffect(() => {
+    onlineManager.setEventListener((setOnline) => {
+      const eventSubscription = Network.addNetworkStateListener((state) => {
+        setOnline(!!state.isConnected);
+      });
+      return eventSubscription.remove;
+    });
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
