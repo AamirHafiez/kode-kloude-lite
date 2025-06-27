@@ -20,6 +20,11 @@ export default function Index() {
       <TButton onPress={() => router.navigate("/home")} title="Go to Home" />
       {/* // TODO: Remove this */}
       <TButton
+        onPress={() => router.navigate("/course-detail/123")}
+        title="Go to Course Detail"
+      />
+      {/* // TODO: Remove this */}
+      <TButton
         onPress={() => AppLocalStorage.delete("COURSES")}
         title="Delete Storage"
       />
