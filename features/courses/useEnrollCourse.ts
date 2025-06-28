@@ -10,7 +10,7 @@ const useEnrollCourse = (course?: Course) => {
       throw new Error("Course not provided.");
     }
     if (isEnrolled()) {
-      return;
+      return "ALREADY_ENROLLED";
     }
     if (enrolledCourses == null || enrolledCourses.length <= 0) {
       setEnrolledCourse([course.id]);
@@ -19,6 +19,7 @@ const useEnrollCourse = (course?: Course) => {
       prevEnrolled.add(course.id);
       setEnrolledCourse(Array.from(prevEnrolled));
     }
+    return "ENROLLED";
   };
 
   const isEnrolled = () => {
