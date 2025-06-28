@@ -38,12 +38,47 @@
       "responseMode": null,
       "streamingMode": null,
       "streamingInterval": 0
+    },
+    {
+      "uuid": "c4eccb7d-473c-4b57-b76a-9675e3cfd57c",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "course-completion/:slug",
+      "responses": [
+        {
+          "uuid": "e4810d36-0014-4577-85e3-149393287cbc",
+          "body": "{\n  \"completed\": 80\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
     }
   ],
   "rootChildren": [
     {
       "type": "route",
       "uuid": "1af7174e-94bc-44a9-8458-020982e55039"
+    },
+    {
+      "type": "route",
+      "uuid": "c4eccb7d-473c-4b57-b76a-9675e3cfd57c"
     }
   ],
   "proxyMode": true,

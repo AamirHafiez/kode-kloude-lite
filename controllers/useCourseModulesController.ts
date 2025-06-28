@@ -5,7 +5,9 @@ import { useCallback } from "react";
 import { CourseModulesSearchParam } from "./types";
 
 const useCourseModulesController = (props: CourseModulesSearchParam) => {
-  const { isLoading, data, error } = useCourseDetails(props.slug);
+  const { isLoading, data, error, courseCompletion } = useCourseDetails(
+    props.slug,
+  );
 
   const router = useRouter();
 
@@ -21,6 +23,7 @@ const useCourseModulesController = (props: CourseModulesSearchParam) => {
     data,
     error,
     handlePressLesson,
+    courseCompleted: courseCompletion.data?.completed,
   };
 };
 

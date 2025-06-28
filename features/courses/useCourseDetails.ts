@@ -12,6 +12,13 @@ const useCourseDetails = (courseSlug: Course["slug"]) => {
     staleTime: Infinity,
   });
 
+  const courseCompletion = useQuery({
+    queryKey: coursesQueryKeys.completion(courseSlug),
+    queryFn: () => coursesNetworkAdapter.getCourseCompletion(courseSlug),
+    refetchOnWindowFocus: "always",
+    staleTime: 0,
+  });
+
   useEffect(() => {
     if (courseDetailQuery.data != null) {
       AppLocalStorage.set("LAST_VIEW_COURSE", courseDetailQuery.data);
@@ -20,6 +27,7 @@ const useCourseDetails = (courseSlug: Course["slug"]) => {
 
   return {
     ...courseDetailQuery,
+    courseCompletion,
   };
 };
 

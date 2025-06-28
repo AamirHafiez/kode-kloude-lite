@@ -6,6 +6,8 @@ const coursesQueryKeys = Object.freeze({
     [{ ...coursesQueryKeys.all[0], onlineState }] as const,
   detail: (slug: Course["slug"]) =>
     [{ ...coursesQueryKeys.all[0], type: "course-detail", slug }] as const,
+  completion: (slug: Course["slug"]) =>
+    [{ ...coursesQueryKeys.all[0], type: "course-completion", slug }] as const,
 });
 
 export default coursesQueryKeys;

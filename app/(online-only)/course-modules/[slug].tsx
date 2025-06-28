@@ -12,7 +12,7 @@ const MemoizedLessonHeader = memo(LessonHeader);
 const CourseModules = () => {
   const localSearch = useLocalSearchParams<CourseModulesSearchParam>();
 
-  const { data, error, isLoading, handlePressLesson } =
+  const { data, error, isLoading, handlePressLesson, courseCompleted } =
     useCourseModulesController(localSearch);
 
   if (isLoading) {
@@ -37,9 +37,16 @@ const CourseModules = () => {
           data: module.lessons,
         }))}
         ListHeaderComponent={() => (
-          <TText variant="heading3" style={styles.titleText}>
-            {data?.title}
-          </TText>
+          <>
+            <TText variant="heading3" style={styles.titleText}>
+              {data?.title}
+            </TText>
+            {courseCompleted != null && (
+              <TText variant="caption3" style={styles.completedText}>
+                (Total Completion: {courseCompleted}%)
+              </TText>
+            )}
+          </>
         )}
         ListFooterComponent={() => <TBox style={styles.spacer} />}
         keyExtractor={(item) => item.id}
@@ -84,5 +91,8 @@ const styles = StyleSheet.create({
   spacer: {
     height: 20,
     aspectRatio: 1,
+  },
+  completedText: {
+    textAlign: "center",
   },
 });
