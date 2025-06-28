@@ -1,5 +1,6 @@
 import CoursesModel, { Course } from "@/data/models/CoursesModel";
 import { MMKV } from "react-native-mmkv";
+import { VimeoVideoData } from "./types";
 import useLocalStorage from "./useLocalStorage";
 import { createLocalStorage } from "./utils";
 
@@ -9,6 +10,7 @@ type AppLocalStorageSchema = {
   COURSES: CoursesModel;
   LAST_VIEW_COURSE: Course;
   ENROLLED_COURSES: Course["id"][];
+  VIMEO_VIDEO_DATA: Record<string, VimeoVideoData>;
 };
 
 const AppLocalStorage = createLocalStorage<AppLocalStorageSchema>({

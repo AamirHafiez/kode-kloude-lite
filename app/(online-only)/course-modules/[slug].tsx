@@ -43,10 +43,10 @@ const CourseModules = () => {
         )}
         ListFooterComponent={() => <TBox style={styles.spacer} />}
         keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           return (
             <MemoizedLessonHeader
-              title={`${index}. ${item.title}`}
+              data={item}
               style={styles.textMargins}
               onPress={() => handlePressLesson(item.id)}
             />
