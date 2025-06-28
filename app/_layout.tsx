@@ -4,7 +4,18 @@ import { Stack } from "expo-router";
 export default function RootLayout() {
   return (
     <AppProvider>
-      <Stack />
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "lightskyblue",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          title: "",
+        }}
+      />
     </AppProvider>
   );
 }

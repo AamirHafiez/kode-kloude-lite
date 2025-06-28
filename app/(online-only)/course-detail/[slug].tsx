@@ -5,13 +5,19 @@ import { CourseDetailSearchParam } from "@/controllers/types";
 import useCourseDetailController from "@/controllers/useCourseDetailController";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 const CourseDetail = () => {
   const localSearch = useLocalSearchParams<CourseDetailSearchParam>();
 
-  const { data, error, isLoading, isEnrolled, onEnrollCourse } =
-    useCourseDetailController(localSearch);
+  const {
+    data,
+    error,
+    isLoading,
+    isEnrolled,
+    onEnrollCourse,
+    onStartLearning,
+  } = useCourseDetailController(localSearch);
 
   if (isLoading) {
     return (
@@ -28,17 +34,20 @@ const CourseDetail = () => {
     );
   }
   return (
-    <TBox>
-      <TText variant="heading3" style={styles.titleText}>
-        {data?.title}
-      </TText>
-      {!isEnrolled() && (
+    <ScrollView>
+      <TBox>
+        <TText variant="heading3" style={styles.titleText}>
+          {data?.title}
+        </TText>
         <TBox style={styles.enrollButtonContainer}>
-          <TButton title="Enroll Now" onPress={onEnrollCourse} />
+          <TButton
+            title={isEnrolled() ? "Start Learning" : "Enroll Now"}
+            onPress={isEnrolled() ? onStartLearning : onEnrollCourse}
+          />
         </TBox>
-      )}
-      <TText>{JSON.stringify(data)}</TText>
-    </TBox>
+        <TText style={styles.descriptionText}>{data?.description}</TText>
+      </TBox>
+    </ScrollView>
   );
 };
 
@@ -53,5 +62,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
+  },
+  descriptionText: {
+    marginHorizontal: 20,
+    paddingBottom: 30,
   },
 });

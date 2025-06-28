@@ -1,1 +1,4 @@
-export type CourseDetailSearchParam = { slug: string };
+import { Course } from "@/data/models/CoursesModel";
+
+export type CourseDetailSearchParam = { slug: Course["slug"] };
+export type CourseModulesSearchParam = { slug: Course["slug"] };
