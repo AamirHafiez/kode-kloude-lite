@@ -25,7 +25,15 @@ const CourseCard = (props: CourseCardProps) => {
 
   return (
     <TPressable disabled={onPress == null} onPress={handlePress}>
-      <TSurface style={[styles.container, style]}>
+      <TSurface
+        style={[
+          styles.container,
+          {
+            backgroundColor: isLastViewed ? "paleturquoise" : "white",
+          },
+          style,
+        ]}
+      >
         {isLastViewed && (
           <TText style={styles.lastViewedHeading} variant="body1">
             Last Viewed
@@ -50,7 +58,6 @@ export default CourseCard;
 const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
-    backgroundColor: "white",
     padding: 10,
   },
   textContainer: {
@@ -61,7 +68,7 @@ const styles = StyleSheet.create({
   },
   lastViewedHeading: {
     marginBottom: 10,
-    color: "forestgreen",
+    color: "midnightblue",
     textAlign: "center",
   },
 });
