@@ -8,6 +8,7 @@ const appLocalStore = new MMKV();
 type AppLocalStorageSchema = {
   COURSES: CoursesModel;
   LAST_VIEW_COURSE: Course;
+  ENROLLED_COURSES: Course["id"][];
 };
 
 const AppLocalStorage = createLocalStorage<AppLocalStorageSchema>({
