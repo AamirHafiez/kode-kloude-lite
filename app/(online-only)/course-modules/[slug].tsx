@@ -1,17 +1,19 @@
 import TBox from "@/components/atoms/TBox/TBox";
-import TPressable from "@/components/atoms/TPressable/TPressable";
 import TText from "@/components/atoms/TText/TText";
-import TSurface from "@/components/molecules/TSurface/TSurface";
+import LessonHeader from "@/components/organisms/LessonHeader/LessonHeader";
 import { CourseModulesSearchParam } from "@/controllers/types";
 import useCourseModulesController from "@/controllers/useCourseModulesController";
 import { useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { memo } from "react";
 import { SectionList, StyleSheet } from "react-native";
+
+const MemoizedLessonHeader = memo(LessonHeader);
 
 const CourseModules = () => {
   const localSearch = useLocalSearchParams<CourseModulesSearchParam>();
 
-  const { data, error, isLoading } = useCourseModulesController(localSearch);
+  const { data, error, isLoading, handlePressLesson } =
+    useCourseModulesController(localSearch);
 
   if (isLoading) {
     return (
@@ -43,13 +45,11 @@ const CourseModules = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => {
           return (
-            <TPressable onPress={() => {}}>
-              <TSurface style={styles.lessonContainer}>
-                <TText variant="body4" style={styles.textMargins}>
-                  {index + 1}. {item.title}
-                </TText>
-              </TSurface>
-            </TPressable>
+            <MemoizedLessonHeader
+              title={`${index}. ${item.title}`}
+              style={styles.textMargins}
+              onPress={() => handlePressLesson(item.id)}
+            />
           );
         }}
         ItemSeparatorComponent={() => <TBox style={styles.spacer} />}
@@ -84,9 +84,5 @@ const styles = StyleSheet.create({
   spacer: {
     height: 20,
     aspectRatio: 1,
-  },
-  lessonContainer: {
-    marginHorizontal: 20,
-    paddingVertical: 10,
   },
 });
