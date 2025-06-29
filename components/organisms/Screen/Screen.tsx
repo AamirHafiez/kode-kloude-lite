@@ -27,10 +27,9 @@ const Screen = (props: ScreenProps) => {
     if (!enableBack || !router.canGoBack()) return null;
     return (
       <TBox style={styles.screenHeaderBackContainer}>
-        <TPressable style={styles.backPressable} onPress={onPressBack}>
-          <TText variant="heading2">⬅</TText>
+        <TPressable onPress={onPressBack}>
           <TText style={styles.screenHeaderBackText} variant="body1">
-            Go Back
+            ⬅ {"  "}Go Back
           </TText>
         </TPressable>
       </TBox>
@@ -92,10 +91,5 @@ const styles = StyleSheet.create({
   },
   screenHeaderBackText: {
     color: "black",
-  },
-  backPressable: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: 10,
   },
 });

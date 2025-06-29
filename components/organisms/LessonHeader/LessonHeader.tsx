@@ -1,7 +1,7 @@
 import TPressable from "@/components/atoms/TPressable/TPressable";
 import TText from "@/components/atoms/TText/TText";
 import TSurface from "@/components/molecules/TSurface/TSurface";
-import { LESSON_VIDEO_END_THRESHOLD_PERCENTAGE } from "@/config/lessonConfig";
+import lessonConfig from "@/config/lessonConfig";
 import { Lesson } from "@/data/models/CourseDetailsModel";
 import useVimeoVideoHandlers from "@/utils/hooks/useVimeoVideoHandlers";
 import React from "react";
@@ -17,7 +17,8 @@ const LessonHeader = (props: LessonHeaderProps) => {
   const { onPress, style, data } = props;
 
   const { hasVideoEnded, data: lessonData } = useVimeoVideoHandlers(data.id, {
-    videoEndThresholdPercentage: LESSON_VIDEO_END_THRESHOLD_PERCENTAGE,
+    videoEndThresholdPercentage:
+      lessonConfig.LESSON_VIDEO_END_THRESHOLD_PERCENTAGE,
   });
 
   const percentageComplete = lessonData?.percent ?? 0;

@@ -1,3 +1,4 @@
+import lessonConfig from "@/config/lessonConfig";
 import useCourseDetails from "@/features/courses/useCourseDetails";
 import useEnrollCourse from "@/features/courses/useEnrollCourse";
 import { scheduleNotification } from "@/utils/notifications/notificationUtilitis";
@@ -17,7 +18,7 @@ const useCourseDetailController = (props: CourseDetailSearchParam) => {
       scheduleNotification({
         title: "Hey Start your learning today.",
         body: "Start learning, " + data?.title,
-        time: 10, // 10 seconds
+        time: lessonConfig.LESSON_SCHEDULED_NOTIFICATION_TIME_DELAY,
       });
     }
   };
