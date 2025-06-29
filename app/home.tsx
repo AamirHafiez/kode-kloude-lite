@@ -2,6 +2,8 @@ import TBox from "@/components/atoms/TBox/TBox";
 import TText from "@/components/atoms/TText/TText";
 import CourseCard from "@/components/organisms/CourseCard/CourseCard";
 import OnlineStatusBar from "@/components/organisms/OnlineStatusBar/OnlineStatusBar";
+import Screen from "@/components/organisms/Screen/Screen";
+import AppConfig from "@/config/AppConfig";
 import useHomeController from "@/controllers/useHomeController";
 import { memo } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
@@ -39,23 +41,15 @@ const Home = () => {
     );
   };
 
-  if (isLoading && onlineStatus.isConnected) {
-    return (
-      <TBox>
-        <TText>Loading...</TText>
-      </TBox>
-    );
-  }
-  if (error && onlineStatus.isConnected) {
-    return (
-      <TBox>
-        <TText>Error</TText>
-      </TBox>
-    );
-  }
-
   return (
-    <>
+    <Screen
+      isLoading={isLoading && onlineStatus.isConnected}
+      error={
+        error && onlineStatus.isConnected
+          ? AppConfig.GENERIC_ERROR_STRING
+          : undefined
+      }
+    >
       {onlineStatus?.isConnected != null && (
         <OnlineStatusBar isOnline={onlineStatus.isConnected} />
       )}
@@ -82,7 +76,7 @@ const Home = () => {
         ListFooterComponent={shouldRenderSpinner ? renderSpinner() : null}
         ListHeaderComponent={renderLastViewCourse()}
       />
-    </>
+    </Screen>
   );
 };
 

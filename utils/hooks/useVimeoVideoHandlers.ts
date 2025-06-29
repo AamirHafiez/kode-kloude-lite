@@ -28,6 +28,10 @@ const useVimeoVideoHandlers = (
       if (!isVideoDataPresent()) return;
       const videoData = vimeoVideoData![videoId]!;
       onTimeUpdate(videoData);
+
+      return () => {
+        onTimeUpdate(videoData);
+      };
     }, []),
   );
 

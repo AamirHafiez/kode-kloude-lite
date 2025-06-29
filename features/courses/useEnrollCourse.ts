@@ -7,7 +7,7 @@ const useEnrollCourse = (course?: Course) => {
 
   const onEnrollCourse = () => {
     if (course == null) {
-      throw new Error("Course not provided.");
+      return "COULD_NOT_ENROLL";
     }
     if (isEnrolled()) {
       return "ALREADY_ENROLLED";
@@ -24,7 +24,7 @@ const useEnrollCourse = (course?: Course) => {
 
   const isEnrolled = () => {
     if (course == null) {
-      throw new Error("Course not provided.");
+      return false;
     }
     const enrolledCourseSet = new Set(enrolledCourses);
     if (enrolledCourseSet.has(course.id)) return true;

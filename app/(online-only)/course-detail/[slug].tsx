@@ -1,6 +1,8 @@
 import TBox from "@/components/atoms/TBox/TBox";
 import TButton from "@/components/atoms/TButton/TButton";
 import TText from "@/components/atoms/TText/TText";
+import Screen from "@/components/organisms/Screen/Screen";
+import AppConfig from "@/config/AppConfig";
 import { CourseDetailSearchParam } from "@/controllers/types";
 import useCourseDetailController from "@/controllers/useCourseDetailController";
 import { useLocalSearchParams } from "expo-router";
@@ -19,35 +21,28 @@ const CourseDetail = () => {
     onStartLearning,
   } = useCourseDetailController(localSearch);
 
-  if (isLoading) {
-    return (
-      <TBox>
-        <TText>Loading...</TText>
-      </TBox>
-    );
-  }
-  if (error) {
-    return (
-      <TBox>
-        <TText>Error</TText>
-      </TBox>
-    );
-  }
+  console.log("isLoading", isLoading, "error", error);
+
   return (
-    <ScrollView>
-      <TBox>
-        <TText variant="heading3" style={styles.titleText}>
-          {data?.title}
-        </TText>
-        <TBox style={styles.enrollButtonContainer}>
-          <TButton
-            title={isEnrolled() ? "Start Learning" : "Enroll Now"}
-            onPress={isEnrolled() ? onStartLearning : onEnrollCourse}
-          />
+    <Screen
+      isLoading={isLoading}
+      error={error ? AppConfig.GENERIC_ERROR_STRING : undefined}
+    >
+      <ScrollView>
+        <TBox>
+          <TText variant="heading3" style={styles.titleText}>
+            {data?.title}
+          </TText>
+          <TBox style={styles.enrollButtonContainer}>
+            <TButton
+              title={isEnrolled() ? "Start Learning" : "Enroll Now"}
+              onPress={isEnrolled() ? onStartLearning : onEnrollCourse}
+            />
+          </TBox>
+          <TText style={styles.descriptionText}>{data?.description}</TText>
         </TBox>
-        <TText style={styles.descriptionText}>{data?.description}</TText>
-      </TBox>
-    </ScrollView>
+      </ScrollView>
+    </Screen>
   );
 };
 

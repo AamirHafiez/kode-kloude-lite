@@ -1,6 +1,8 @@
 import TBox from "@/components/atoms/TBox/TBox";
 import TText from "@/components/atoms/TText/TText";
 import LessonHeader from "@/components/organisms/LessonHeader/LessonHeader";
+import Screen from "@/components/organisms/Screen/Screen";
+import AppConfig from "@/config/AppConfig";
 import { CourseModulesSearchParam } from "@/controllers/types";
 import useCourseModulesController from "@/controllers/useCourseModulesController";
 import { useLocalSearchParams } from "expo-router";
@@ -15,24 +17,17 @@ const CourseModules = () => {
   const { data, error, isLoading, handlePressLesson, courseCompleted } =
     useCourseModulesController(localSearch);
 
-  if (isLoading) {
-    return (
-      <TBox>
-        <TText>Loading...</TText>
-      </TBox>
-    );
-  }
-  if (error || data?.modules == null) {
-    return (
-      <TBox>
-        <TText>Error</TText>
-      </TBox>
-    );
-  }
   return (
-    <TBox style={styles.container}>
+    <Screen
+      isLoading={isLoading}
+      error={
+        error || data?.modules == null
+          ? AppConfig.GENERIC_ERROR_STRING
+          : undefined
+      }
+    >
       <SectionList
-        sections={data.modules.map((module) => ({
+        sections={data!.modules.map((module) => ({
           title: module.title,
           data: module.lessons,
         }))}
@@ -69,7 +64,7 @@ const CourseModules = () => {
           </TText>
         )}
       />
-    </TBox>
+    </Screen>
   );
 };
 
