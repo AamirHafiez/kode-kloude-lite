@@ -8,10 +8,13 @@ export default function Index() {
 
   // TODO: Remove this
   const logCache = () => {
-    const cachedData = AppLocalStorage.get("COURSES")?.courses;
-    cachedData?.forEach((element) => {
-      console.log("index cachedData", element.title);
-    });
+    const cachedData = AppLocalStorage.get("OFFLINE_COURSES");
+    const courses = cachedData?.pages
+      .flat()
+      .map((item) => item?.courses.flat())
+      .filter((item) => item != null)
+      .flat();
+    courses?.forEach((course) => console.log(course.title));
     console.log();
   };
 
@@ -37,3 +40,6 @@ export default function Index() {
     </TBox>
   );
 }
+// Deep Link:
+// npx uri-scheme open kodekloudelite://course-detail/postman-essentials --android
+// npx uri-scheme open kodekloudelite://course-detail/postman-essentials --ios

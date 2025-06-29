@@ -1,4 +1,5 @@
 import CoursesModel, { Course } from "@/data/models/CoursesModel";
+import { InfiniteData } from "@tanstack/react-query";
 import { MMKV } from "react-native-mmkv";
 import { VimeoVideoData } from "./types";
 import useLocalStorage from "./useLocalStorage";
@@ -11,6 +12,7 @@ type AppLocalStorageSchema = {
   LAST_VIEW_COURSE: Course;
   ENROLLED_COURSES: Course["id"][];
   VIMEO_VIDEO_DATA: Record<string, VimeoVideoData>;
+  OFFLINE_COURSES: InfiniteData<CoursesModel, unknown>;
 };
 
 const AppLocalStorage = createLocalStorage<AppLocalStorageSchema>({

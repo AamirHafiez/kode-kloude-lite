@@ -1,5 +1,4 @@
 import TBox from "@/components/atoms/TBox/TBox";
-import TButton from "@/components/atoms/TButton/TButton";
 import TText from "@/components/atoms/TText/TText";
 import CourseCard from "@/components/organisms/CourseCard/CourseCard";
 import OnlineStatusBar from "@/components/organisms/OnlineStatusBar/OnlineStatusBar";
@@ -18,7 +17,6 @@ const Home = () => {
     error,
     onListMomentumScrollEnd,
     onListEndReached,
-    handlePressNavigateDownloads,
     handlePressCourseCard,
     lastViewedCourse,
   } = useHomeController();
@@ -84,14 +82,6 @@ const Home = () => {
         ListFooterComponent={shouldRenderSpinner ? renderSpinner() : null}
         ListHeaderComponent={renderLastViewCourse()}
       />
-      {onlineStatus?.isConnected != null && !onlineStatus.isConnected && (
-        <TBox style={styles.downloadsContainer}>
-          <TButton
-            title="Go to downloads"
-            onPress={handlePressNavigateDownloads}
-          />
-        </TBox>
-      )}
     </>
   );
 };
@@ -105,9 +95,6 @@ const styles = StyleSheet.create({
   noShowText: {
     textAlign: "center",
     paddingTop: 100,
-  },
-  downloadsContainer: {
-    paddingBottom: 30,
   },
   lastViewedContainer: {
     paddingHorizontal: 20,

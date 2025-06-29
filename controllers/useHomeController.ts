@@ -1,6 +1,8 @@
 import { Course } from "@/data/models/CoursesModel";
 import useCourses from "@/features/courses/useCourses";
-import { useAppLocalStorage } from "@/store/local-storage/appLocalStorage";
+import AppLocalStorage, {
+  useAppLocalStorage,
+} from "@/store/local-storage/appLocalStorage";
 import useOnlineStatus from "@/utils/hooks/useOnlineStatus";
 import { useRouter } from "expo-router";
 import { useCallback, useMemo, useRef } from "react";
@@ -39,18 +41,19 @@ const useHomeController = () => {
   };
 
   const coursesData = useMemo(() => {
-    return data?.pages == null
+    const dataForCourses =
+      onlineStatus != null && !onlineStatus.isConnected
+        ? AppLocalStorage.get("OFFLINE_COURSES")
+        : data;
+
+    return dataForCourses?.pages == null
       ? []
-      : data.pages
+      : dataForCourses.pages
           .flat()
           .map((item) => item?.courses.flat())
           .filter((item) => item != null)
           .flat();
-  }, [data?.pages]);
-
-  const handlePressNavigateDownloads = () => {
-    router.replace("/downloads");
-  };
+  }, [data?.pages, onlineStatus.isConnected]);
 
   const handlePressCourseCard = useCallback(
     (course: Course) => {
@@ -67,7 +70,6 @@ const useHomeController = () => {
     error,
     onListMomentumScrollEnd,
     onListEndReached,
-    handlePressNavigateDownloads,
     handlePressCourseCard,
     lastViewedCourse,
   };
