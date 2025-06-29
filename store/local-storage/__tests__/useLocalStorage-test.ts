@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-native";
 import useLocalStorage from "../useLocalStorage";
 
 import { useMMKVString } from "react-native-mmkv";

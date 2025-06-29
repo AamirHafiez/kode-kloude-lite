@@ -1,5 +1,5 @@
 import { useAppLocalStorage } from "@/store/local-storage/appLocalStorage";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-native";
 import useEnrollCourse from "../useEnrollCourse";
 
 describe("useEnrollCourse", () => {

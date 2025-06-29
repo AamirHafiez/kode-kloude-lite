@@ -1,7 +1,7 @@
 import TBox from "@/components/atoms/TBox/TBox";
 import TText from "@/components/atoms/TText/TText";
 import useOnlineStatus from "@/utils/hooks/useOnlineStatus";
-import { Slot } from "expo-router";
+import { Slot, Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 
 export default function Layout() {
@@ -14,7 +14,15 @@ export default function Layout() {
       </TBox>
     );
   }
-  return <Slot />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Slot />
+    </Stack>
+  );
 }
 
 const styles = StyleSheet.create({

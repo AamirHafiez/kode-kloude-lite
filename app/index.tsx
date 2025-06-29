@@ -1,5 +1,5 @@
-import TBox from "@/components/atoms/TBox/TBox";
 import TButton from "@/components/atoms/TButton/TButton";
+import Screen from "@/components/organisms/Screen/Screen";
 import AppLocalStorage from "@/store/local-storage/appLocalStorage";
 import { useRouter } from "expo-router";
 
@@ -19,25 +19,15 @@ export default function Index() {
   };
 
   return (
-    <TBox>
+    <Screen>
       <TButton onPress={() => router.navigate("/home")} title="Go to Home" />
-      {/* // TODO: Remove this */}
-      <TButton
-        onPress={() => router.navigate("/course-detail/123")}
-        title="Go to Course Detail"
-      />
-      {/* // TODO: Remove this */}
-      <TButton
-        onPress={() => AppLocalStorage.delete("COURSES")}
-        title="Delete Courses Storage"
-      />
       <TButton
         onPress={() => AppLocalStorage.deleteAll()}
         title="Delete All Storage"
       />
       {/* // TODO: Remove this */}
       <TButton onPress={logCache} title="Log Storage" />
-    </TBox>
+    </Screen>
   );
 }
 // Deep Link:

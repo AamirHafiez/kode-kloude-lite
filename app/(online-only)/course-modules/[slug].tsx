@@ -20,6 +20,7 @@ const CourseModules = () => {
   return (
     <Screen
       isLoading={isLoading}
+      enableBack
       error={
         error || data?.modules == null
           ? AppConfig.GENERIC_ERROR_STRING
@@ -71,17 +72,17 @@ const CourseModules = () => {
 export default CourseModules;
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
   titleText: {
     margin: 10,
     textAlign: "center",
   },
   textMargins: {
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   sectionText: {
     color: "navy",
-    marginVertical: 20,
+    paddingVertical: 20,
+    backgroundColor: "white",
   },
   spacer: {
     height: 20,

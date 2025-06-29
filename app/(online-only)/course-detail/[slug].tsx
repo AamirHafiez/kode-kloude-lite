@@ -21,10 +21,9 @@ const CourseDetail = () => {
     onStartLearning,
   } = useCourseDetailController(localSearch);
 
-  console.log("isLoading", isLoading, "error", error);
-
   return (
     <Screen
+      enableBack
       isLoading={isLoading}
       error={error ? AppConfig.GENERIC_ERROR_STRING : undefined}
     >

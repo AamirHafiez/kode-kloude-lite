@@ -43,6 +43,7 @@ const Home = () => {
 
   return (
     <Screen
+      enableBack
       isLoading={isLoading && onlineStatus.isConnected}
       error={
         error && onlineStatus.isConnected

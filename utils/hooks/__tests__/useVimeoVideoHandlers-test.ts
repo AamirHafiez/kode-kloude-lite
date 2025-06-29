@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-native";
 import useVimeoVideoHandlers from "../useVimeoVideoHandlers";
 
 import { useAppLocalStorage } from "@/store/local-storage/appLocalStorage";
@@ -148,7 +148,7 @@ describe("useVimeoVideoHandlers", () => {
       undefined,
       mockSetVimeoVideoData,
     ]);
-    rerender();
+    rerender(null);
     expect(result.current.isVideoDataPresent()).toBe(false);
   });
 });

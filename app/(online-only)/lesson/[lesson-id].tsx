@@ -13,7 +13,7 @@ const Lesson = () => {
     useLessonController(localSearch);
 
   return (
-    <Screen>
+    <Screen enableBack>
       <TText>{localSearch["lesson-id"]}</TText>
       <Vimeo
         videoId={"347119375"}

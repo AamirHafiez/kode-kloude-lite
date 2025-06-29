@@ -1,7 +1,7 @@
 import useCourses from "@/features/courses/useCourses";
 import AppLocalStorage from "@/store/local-storage/appLocalStorage";
 import useOnlineStatus from "@/utils/hooks/useOnlineStatus";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-native";
 import { mockNavigate } from "../../jest-setup";
 import useHomeController from "../useHomeController";
 
@@ -119,7 +119,7 @@ describe("useHomeController", () => {
       hasNextPage: false,
     });
 
-    rerender();
+    rerender(null);
 
     expect(result.current.isLoading).toBe(true);
 
@@ -132,7 +132,7 @@ describe("useHomeController", () => {
       hasNextPage: true,
     });
 
-    rerender();
+    rerender(null);
 
     expect(result.current.shouldRenderSpinner).toBe(true);
   });

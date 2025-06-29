@@ -14,6 +14,7 @@ export default function RootLayout() {
             fontWeight: "bold",
           },
           title: "",
+          headerShown: false,
         }}
       />
     </AppProvider>
