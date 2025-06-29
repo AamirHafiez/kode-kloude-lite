@@ -1,3 +1,3 @@
 import { AxiosInstance } from "axios";
 
-export type ApiAdapterInstance = AxiosInstance
+export type ApiAdapterInstance = AxiosInstance;

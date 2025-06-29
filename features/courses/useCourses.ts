@@ -8,32 +8,6 @@ import coursesQueryKeys from "./coursesQueryKeys";
 
 const cacheCourseResponse = (data?: InfiniteData<CoursesModel, unknown>) => {
   if (data != null) AppLocalStorage.set("OFFLINE_COURSES", data);
-  // const courses = data?.courses;
-  // const metadata = data?.metadata;
-
-  // console.log("cacheCourseResponse");
-  // courses?.forEach((course) => {
-  //   console.log(course.title);
-  // });
-  // console.log();
-
-  // const { courses: prevStoredCourses } = AppLocalStorage.get("COURSES") ?? {};
-  // if (metadata != null && courses != null) {
-  //   const offlineCourses: CoursesModel = {
-  //     courses:
-  //       prevStoredCourses != null
-  //         ? Array.from(new Set([...prevStoredCourses, ...courses]))
-  //         : [...courses],
-  //     metadata,
-  //   };
-  //   AppLocalStorage.set("COURSES", offlineCourses);
-  // }
-};
-
-const getCoursesData = async (page: number) => {
-  const res = await coursesNetworkAdapter.getCourses(page);
-  // cacheCourseResponse(res);
-  return res;
 };
 
 const useInfiniteCoursesQuery = (initialPage: number) => {
@@ -41,7 +15,7 @@ const useInfiniteCoursesQuery = (initialPage: number) => {
 
   const coursesQuery = useInfiniteQuery({
     queryKey: coursesQueryKeys.page(networkState.isConnected!),
-    queryFn: ({ pageParam }) => getCoursesData(pageParam),
+    queryFn: ({ pageParam }) => coursesNetworkAdapter.getCourses(pageParam),
     initialPageParam: initialPage,
     getNextPageParam: (lastPage) => lastPage?.metadata?.next_page,
     enabled: networkState.isConnected != null,

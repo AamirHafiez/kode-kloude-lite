@@ -35,7 +35,7 @@ const useVimeoVideoHandlers = (
     }, []),
   );
 
-  const onTimeUpdate = (data: VimeoVideoData) => {
+  function onTimeUpdate(data: VimeoVideoData) {
     timeUpdateRef.current = data;
     const toNumPercentage = Number(data.percent);
     if (Number.isNaN(toNumPercentage)) return;
@@ -44,17 +44,17 @@ const useVimeoVideoHandlers = (
     } else if (videoEnd && toNumPercentage < videoEndThresholdPercentage) {
       setVideoEnd(false);
     }
-  };
+  }
 
-  const onPause = () => {
+  function onPause() {
     updateVideoData();
-  };
+  }
 
-  const onEnd = () => {
+  function onEnd() {
     updateVideoData();
-  };
+  }
 
-  const updateVideoData = () => {
+  function updateVideoData() {
     if (vimeoVideoData == null) {
       setVimeoVideoData({
         [videoId]: timeUpdateRef.current,
@@ -65,23 +65,14 @@ const useVimeoVideoHandlers = (
       ...vimeoVideoData,
       [videoId]: timeUpdateRef.current,
     });
-  };
+  }
 
-  const isVideoDataPresent = () => {
+  function isVideoDataPresent() {
     if (vimeoVideoData?.[videoId] != null) {
       return true;
     }
     return false;
-  };
-
-  const getHasVideoEnded = () => {
-    if (!isVideoDataPresent()) return false;
-    const videoData = vimeoVideoData![videoId]!;
-    const toNumPercentage = Number(videoData.percent);
-    if (Number.isNaN(toNumPercentage)) return false;
-    if (toNumPercentage >= videoEndThresholdPercentage) return true;
-    return false;
-  };
+  }
 
   return {
     pause: onPause,
@@ -89,7 +80,6 @@ const useVimeoVideoHandlers = (
     timeupdate: onTimeUpdate,
     isVideoDataPresent,
     data: vimeoVideoData?.[videoId],
-    getHasVideoEnded,
     hasVideoEnded: videoEnd,
   };
 };
