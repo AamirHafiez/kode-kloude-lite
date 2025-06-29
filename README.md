@@ -82,6 +82,10 @@ You can test deep linking with the following commands:
 5. Component structure: Atomic Design principles dividing UI into Atoms, Molecules, and Organisms.
 6. Framework: Expo for React Native, enabling a smooth developer experience and cross-platform support.
 
+## Watch Demo
+
+[Demo Video](https://drive.google.com/file/d/1d-oHXKX0ynjXWtdtdurjmclejF0lw5uG/view?usp=sharing)
+
 ## Learn more
 
 To learn more about developing your project with Expo, look at the following resources:
