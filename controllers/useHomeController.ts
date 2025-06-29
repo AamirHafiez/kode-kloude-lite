@@ -52,9 +52,12 @@ const useHomeController = () => {
     router.replace("/downloads");
   };
 
-  const handlePressCourseCard = useCallback((course: Course) => {
-    router.navigate(`/course-detail/${course.slug}`);
-  }, []);
+  const handlePressCourseCard = useCallback(
+    (course: Course) => {
+      router.navigate(`/course-detail/${course.slug}`);
+    },
+    [router],
+  );
 
   return {
     coursesData,

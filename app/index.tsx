@@ -26,7 +26,11 @@ export default function Index() {
       {/* // TODO: Remove this */}
       <TButton
         onPress={() => AppLocalStorage.delete("COURSES")}
-        title="Delete Storage"
+        title="Delete Courses Storage"
+      />
+      <TButton
+        onPress={() => AppLocalStorage.deleteAll()}
+        title="Delete All Storage"
       />
       {/* // TODO: Remove this */}
       <TButton onPress={logCache} title="Log Storage" />

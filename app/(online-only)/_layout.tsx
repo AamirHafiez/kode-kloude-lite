@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
   },
   offlineText: {
     textAlign: "center",
+    marginTop: 50,
   },
 });

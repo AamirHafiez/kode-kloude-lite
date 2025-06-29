@@ -2,6 +2,7 @@ import TBox from "@/components/atoms/TBox/TBox";
 import TButton from "@/components/atoms/TButton/TButton";
 import TText from "@/components/atoms/TText/TText";
 import CourseCard from "@/components/organisms/CourseCard/CourseCard";
+import useDownloadsController from "@/controllers/useDownloadsController";
 import AppLocalStorage from "@/store/local-storage/appLocalStorage";
 import useOnlineStatus from "@/utils/hooks/useOnlineStatus";
 import { useRouter } from "expo-router";
@@ -11,6 +12,8 @@ import { FlatList, StyleSheet } from "react-native";
 const MemoizedCourseCard = memo(CourseCard);
 
 const Downloads = () => {
+  const { handlePressCourseCard } = useDownloadsController();
+
   const onlineStatus = useOnlineStatus();
 
   const router = useRouter();
@@ -32,7 +35,7 @@ const Downloads = () => {
             <MemoizedCourseCard
               details={item}
               style={{ margin: 20 }}
-              onPress={(data) => console.log("data", data)}
+              onPress={() => handlePressCourseCard(item)}
             />
           );
         }}

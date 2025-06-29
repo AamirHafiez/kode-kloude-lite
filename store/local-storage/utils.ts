@@ -27,6 +27,12 @@ function clear<StorageSchema extends object>(storage: MMKV) {
   };
 }
 
+function deleteAll(storage: MMKV) {
+  return function () {
+    storage.clearAll();
+  };
+}
+
 export function createLocalStorage<StorageSchema extends object>({
   storage,
 }: {
@@ -36,5 +42,6 @@ export function createLocalStorage<StorageSchema extends object>({
     get: get<StorageSchema>(storage),
     set: set<StorageSchema>(storage),
     delete: clear<StorageSchema>(storage),
+    deleteAll: deleteAll(storage),
   });
 }
