@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "mockoon": "mockoon-cli start --data ./mockoon/kode-kloude.json",
-    "test": "jest --watchAll"
+    "test-watch": "jest --watchAll",
+    "test": "jest"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
