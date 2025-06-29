@@ -73,6 +73,10 @@ You can test deep linking with the following commands:
    
    Module progress is mocked via a static network API returning 80%. It is expected that this will be replaced by real backend data fetching in the future.
 
+2. *Scheduled Notification*:
+   
+   The scheduled notification when enrolled in a course is set to be triggered in 10 seconds instead of 24 hours, in order to test it in development.
+
 ## Tech Choices
 
 1. Architecture: MVVM (Model-View-ViewModel) pattern for scalable and maintainable code.
