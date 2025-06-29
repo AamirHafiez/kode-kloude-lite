@@ -24,7 +24,7 @@ jobs:
           node-version: 18
 
       - name: Install npm dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Run Lint
         run: npm run lint
@@ -46,7 +46,7 @@ jobs:
           node-version: 18
 
       - name: Install npm dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Install Expo CLI
         run: npm install -g eas-cli
