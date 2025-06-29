@@ -1,4 +1,3 @@
-import TText from "@/components/atoms/TText/TText";
 import Screen from "@/components/organisms/Screen/Screen";
 import { LessonSearchParam } from "@/controllers/types";
 import useLessonController from "@/controllers/useLessonController";
@@ -14,7 +13,6 @@ const Lesson = () => {
 
   return (
     <Screen enableBack>
-      <TText>{localSearch["lesson-id"]}</TText>
       <Vimeo
         videoId={"347119375"}
         params={`api=1&autoplay=0#t=${getLastTimeToStartVideo()}`}
