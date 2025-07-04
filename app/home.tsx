@@ -5,7 +5,8 @@ import OnlineStatusBar from "@/components/organisms/OnlineStatusBar/OnlineStatus
 import Screen from "@/components/organisms/Screen/Screen";
 import AppConfig from "@/config/AppConfig";
 import useHomeController from "@/controllers/useHomeController";
-import { memo } from "react";
+import { Course } from "@/data/models/CoursesModel";
+import { memo, useCallback } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 
 const MemoizedCourseCard = memo(CourseCard);
@@ -41,6 +42,20 @@ const Home = () => {
     );
   };
 
+  const renderCourseCard = useCallback(
+    ({ item, index }: { item: Course; index: number }) => {
+      return (
+        <MemoizedCourseCard
+          details={item}
+          style={{ margin: 20 }}
+          onPress={() => handlePressCourseCard(item)}
+          testID={`course-card-${index}`}
+        />
+      );
+    },
+    [handlePressCourseCard],
+  );
+
   return (
     <Screen
       enableBack
@@ -62,15 +77,7 @@ const Home = () => {
       <FlatList
         data={coursesData}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return (
-            <MemoizedCourseCard
-              details={item}
-              style={{ margin: 20 }}
-              onPress={() => handlePressCourseCard(item)}
-            />
-          );
-        }}
+        renderItem={renderCourseCard}
         onEndReached={onListEndReached}
         onMomentumScrollEnd={onListMomentumScrollEnd}
         onEndReachedThreshold={0.3}

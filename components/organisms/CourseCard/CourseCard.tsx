@@ -12,10 +12,11 @@ type CourseCardProps = {
   details: Pick<Course, "title" | "tutors" | "thumbnail_url">;
   onPress?: (data: CourseCardProps["details"]) => void;
   isLastViewed?: boolean;
+  testID?: string;
 };
 
 const CourseCard = (props: CourseCardProps) => {
-  const { style, details, onPress, isLastViewed = false } = props;
+  const { style, details, onPress, isLastViewed = false, testID } = props;
 
   const handlePress = () => {
     if (onPress) {
@@ -24,7 +25,11 @@ const CourseCard = (props: CourseCardProps) => {
   };
 
   return (
-    <TPressable disabled={onPress == null} onPress={handlePress}>
+    <TPressable
+      testID={testID}
+      disabled={onPress == null}
+      onPress={handlePress}
+    >
       <TSurface
         style={[
           styles.container,

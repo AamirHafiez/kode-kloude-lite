@@ -12,7 +12,12 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
 
   return (
     <TBox style={styles.container}>
-      <TImage style={styles.image} source={source} contentFit="contain" />
+      <TImage
+        cachePolicy="disk"
+        style={styles.image}
+        source={source}
+        contentFit="contain"
+      />
     </TBox>
   );
 };
