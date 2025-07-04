@@ -1,0 +1,22 @@
+appId: com.anonymous.kode-kloude-lite
+---
+- runFlow: app-launch.yml
+- assertVisible: 'Go to Home'
+- assertVisible: 'Delete All Storage'
+- tapOn: 'Delete All Storage'
+- tapOn: 'Go to Home'
+- assertVisible: 
+    id: 'course-card-1'
+- tapOn: 
+    id: 'course-card-1'
+    retryTapIfNoChange: true
+- runFlow:
+    when:
+      visible: 'Enroll Now'
+    commands: 
+      - tapOn: 'Enroll Now'
+- runFlow:
+    when:
+      visible: 'Start Learning'
+    commands: 
+      - tapOn: 'Start Learning'
