@@ -1,33 +1,35 @@
+import TButton from "@/components/atoms/TButton/TButton";
+import Screen from "@/components/organisms/Screen/Screen";
 import AppLocalStorage from "@/store/local-storage/appLocalStorage";
-import axios from "axios";
-import { useEffect } from "react";
-import { Button, Text, View } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function Index() {
-  useEffect(() => {
-    (async () => {
-      const res = await axios.get<{ success: boolean }>(
-        "http://10.23.83.108:8092/health"
-      );
-      console.log("res", res.data);
-      AppLocalStorage.set("HEALTH", res.data);
-    })();
-  }, []);
+  const router = useRouter();
 
-  const handlePressClickMe = () => {
-    console.log(AppLocalStorage.get("HEALTH"));
+  // TODO: Remove this
+  const logCache = () => {
+    const cachedData = AppLocalStorage.get("OFFLINE_COURSES");
+    const courses = cachedData?.pages
+      .flat()
+      .map((item) => item?.courses.flat())
+      .filter((item) => item != null)
+      .flat();
+    courses?.forEach((course) => console.log(course.title));
+    console.log();
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-      <Button title="Click Me" onPress={handlePressClickMe} />
-    </View>
+    <Screen>
+      <TButton onPress={() => router.navigate("/home")} title="Go to Home" />
+      <TButton
+        onPress={() => AppLocalStorage.deleteAll()}
+        title="Delete All Storage"
+      />
+      {/* // TODO: Remove this */}
+      <TButton onPress={logCache} title="Log Storage" />
+    </Screen>
   );
 }
+// Deep Link:
+// npx uri-scheme open kodekloudelite://course-detail/postman-essentials --android
+// npx uri-scheme open kodekloudelite://course-detail/postman-essentials --ios

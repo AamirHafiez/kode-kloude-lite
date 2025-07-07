@@ -1,6 +1,6 @@
-# Welcome to your Expo app 👋
+# Welcome to Kode-Kloude-Lite app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an React Native [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
 ## Get started
 
@@ -9,31 +9,86 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
    npm install
    ```
+   ---
 
 2. Start the app
 
+   > For Mac users use the following command:
+
    ```bash
-   npx expo start
+   ipconfig getifaddr en0
+   ```
+   You should see an output like `192.168.1.4`.
+   
+   Now, open `config/AppConfig.ts` and set:
+
+   ```NETWORK_BASE_URL: "http://192.168.1.4:8092"```
+
+
+   ---
+
+3. Start the app
+
+   > For Android:
+   ```bash
+   npx expo start:android
    ```
 
-In the output, you'll find options to open the app in a
+   > For iOS:
+   ```bash
+   npx expo start:ios
+   ```
+   ---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+4. Start Mock Api Server in a new terminal
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   ```bash
+   npm run mockoon
+   ```
+   ---
 
-## Get a fresh project
+## Example Deeplinks
 
-When you're ready, run:
+You can test deep linking with the following commands:
 
-```bash
-npm run reset-project
-```
+ 1. > For Android:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+      ```bash
+      npx uri-scheme open kodekloudelite://course-detail/postman-essentials --android
+      ```
+
+
+ 2. > For iOS:
+
+      ```bash
+      npx uri-scheme open kodekloudelite://course-detail/postman-essentials --ios
+      ```
+
+## Assumptions
+
+1. *Lesson progress tracking*:
+
+   Completion and progress of lessons are currently tracked locally via cache instead of network calls. It is assumed that progress data will be synchronized with backend APIs in a production setup.
+2. *Module progress*:
+   
+   Module progress is mocked via a static network API returning 80%. It is expected that this will be replaced by real backend data fetching in the future.
+
+2. *Scheduled Notification*:
+   
+   The scheduled notification when enrolled in a course is set to be triggered in 10 seconds instead of 24 hours, in order to test it in development.
+
+## Tech Choices
+
+1. Architecture: MVVM (Model-View-ViewModel) pattern for scalable and maintainable code.
+2. Data fetching & caching: TanStack Query for efficient data management and infinite scrolling support.
+3. Local storage: MMKV for fast and efficient caching and persistence.
+4. Design patterns: Repository and Adapter patterns implemented for clear data separation.
+5. Component structure: Atomic Design principles dividing UI into Atoms, Molecules, and Organisms.
+6. Framework: Expo for React Native, enabling a smooth developer experience and cross-platform support.
+
+## Watch Demo
+
+[Demo Video](https://drive.google.com/file/d/1d-oHXKX0ynjXWtdtdurjmclejF0lw5uG/view?usp=sharing)
 
 ## Learn more
 

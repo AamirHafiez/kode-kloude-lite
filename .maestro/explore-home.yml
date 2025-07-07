@@ -1,0 +1,14 @@
+appId: com.anonymous.kode-kloude-lite
+---
+- runFlow: app-launch.yml
+- assertVisible: 'Go to Home'
+- tapOn: 'Go to Home'
+- assertVisible: 
+    id: 'course-card-1'
+- scrollUntilVisible:
+      element:
+        id: 'course-card-15'
+      direction: DOWN
+      speed: 40
+      visibilityPercentage: 100
+      timeout: 50000
