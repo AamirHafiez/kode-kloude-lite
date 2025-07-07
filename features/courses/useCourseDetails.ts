@@ -8,13 +8,15 @@ import coursesQueryKeys from "./coursesQueryKeys";
 const useCourseDetails = (courseSlug: Course["slug"]) => {
   const courseDetailQuery = useQuery({
     queryKey: coursesQueryKeys.detail(courseSlug),
-    queryFn: () => coursesNetworkAdapter.getCourseDetails(courseSlug),
+    queryFn: ({ queryKey }) =>
+      coursesNetworkAdapter.getCourseDetails(queryKey[0].slug),
     staleTime: Infinity,
   });
 
   const courseCompletion = useQuery({
     queryKey: coursesQueryKeys.completion(courseSlug),
-    queryFn: () => coursesNetworkAdapter.getCourseCompletion(courseSlug),
+    queryFn: ({ queryKey }) =>
+      coursesNetworkAdapter.getCourseCompletion(queryKey[0].slug),
     refetchOnWindowFocus: "always",
     staleTime: 0,
   });
