@@ -1,0 +1,4 @@
+appId: com.anonymous.kode-kloude-lite
+---
+- runFlow: app-launch.yml
+- assertVisible: 'Go to Home'

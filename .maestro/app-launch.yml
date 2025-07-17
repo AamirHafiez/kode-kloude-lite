@@ -1,0 +1,4 @@
+appId: com.anonymous.kode-kloude-lite
+---
+- runScript: maestro-setup.js
+- launchApp: ${output.appIdUnderTest}
